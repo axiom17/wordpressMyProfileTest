@@ -38,6 +38,7 @@ public class ProfilePage {
 
     public ProfilePage(WebDriver driver){
         this.driver = driver;
+        driver.get("https://wordpress.com/me");
         PageFactory.initElements(driver, this);
     }
 

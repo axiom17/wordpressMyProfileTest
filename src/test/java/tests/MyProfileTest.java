@@ -17,12 +17,19 @@ import pages.ReadPage;
 
 import java.util.concurrent.TimeUnit;
 
+import static org.junit.Assert.assertTrue;
+
 public class MyProfileTest {
 
     private WebDriver driver;
     private String email = "e.levi.allen@gmail.com", password = "P@tr!ck1025";
 
-    private String chromeDriverPath = "C:\\Users\\elevi\\code\\wordpressMyProfileTest\\chromedriver.exe";
+    private String chromeDriverPath = "/home/cryptocaveat/code/wordpressMyProfileTest/chromedriver";
+
+    private LoginPage loginPage;
+    private HomePage home;
+    private ReadPage readPage;
+    private ProfilePage profilePage;
 
     @Before
     public void setup(){
@@ -31,16 +38,16 @@ public class MyProfileTest {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
-        HomePage home = new HomePage(driver);
+        home = new HomePage(driver);
         home.clickLogin();
 
-        LoginPage loginPage = new LoginPage(driver);
+        loginPage = new LoginPage(driver);
         loginPage.enterEmail(email);
         loginPage.clickContinueButton();
         loginPage.enterPassword(password);
         loginPage.clickLoginButton();
 
-        ReadPage readPage = new ReadPage(driver);
+        readPage = new ReadPage(driver);
         readPage.clickMyProfile();
     }
 
@@ -48,21 +55,20 @@ public class MyProfileTest {
     public void testMyProfile(){
 
         ProfilePage profilePage = new ProfilePage(driver);
-        Assert.assertTrue(profilePage.isProfileLoaded());
-        Assert.assertTrue(profilePage.isAboutMeDisplayed());
-        Assert.assertTrue(profilePage.isFirstNameDisplayed());
-        Assert.assertTrue(profilePage.isLastNameDisplayed());
-        Assert.assertTrue(profilePage.isDisplayNameDisplayed());
+        assertTrue(profilePage.isProfileLoaded());
+        assertTrue(profilePage.isAboutMeDisplayed());
+        assertTrue(profilePage.isFirstNameDisplayed());
+        assertTrue(profilePage.isLastNameDisplayed());
+        assertTrue(profilePage.isDisplayNameDisplayed());
 
     }
 
     @Test
     public void testHideGravatar(){
-        ProfilePage profilePage = new ProfilePage(driver);
+        profilePage = new ProfilePage(driver);
         profilePage.clickHideGravatarProfile();
         profilePage.clickSaveProfile();
-
-        Assert.assertTrue(profilePage.isGravatarHidden());
+        assertTrue(profilePage.isGravatarHidden());
     }
 
     @After
